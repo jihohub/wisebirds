@@ -21,7 +21,7 @@ const Header = () => {
   }
 
   return (
-    <div className="fixed w-full h-[80px] bg-blue-500 flex justify-between items-center text-white">
+    <div className="fixed w-full h-[80px] bg-blue-500 flex justify-between items-center text-white z-10">
       <div className="flex h-full items-center justify-around">
         <div className="px-5">
           <Link to="/">Wisebirds</Link>
