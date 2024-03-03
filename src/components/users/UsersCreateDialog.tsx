@@ -1,16 +1,21 @@
 import { checkEmailDuplication, postUser } from "@/apis/users";
+import { createDialogProps } from "@/common";
+import { PostUserProps } from "@/user";
 import { Dialog, Transition } from "@headlessui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Fragment } from "react";
 import { useForm } from "react-hook-form";
 
-const UsersCreateDialog = ({ isCreateOpen, closeCreateModal }) => {
+const UsersCreateDialog = ({
+  isCreateOpen,
+  closeCreateModal,
+}: createDialogProps) => {
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm<PostUserProps>();
 
   const password = watch("password");
   const emailPattern = /^\S+@\S+\.\S+$/;
@@ -25,7 +30,7 @@ const UsersCreateDialog = ({ isCreateOpen, closeCreateModal }) => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
     },
   });
-  const onSubmit = (data) => {
+  const onSubmit = (data: PostUserProps) => {
     mutation.mutate(data);
     closeCreateModal();
   };
@@ -56,7 +61,7 @@ const UsersCreateDialog = ({ isCreateOpen, closeCreateModal }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-[800px] h-[600px] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-[800px] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <Dialog.Title
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900 flex justify-start"
@@ -197,17 +202,17 @@ const UsersCreateDialog = ({ isCreateOpen, closeCreateModal }) => {
                         </p>
                       )}
                     </div>
-                    <div className="flex justify-center mt-10">
+                    <div className="flex justify-center gap-5 mt-10">
                       <button
                         type="button"
-                        className="w-[70px] h-[40px] bg-gray-100 m-5 rounded-lg"
+                        className="w-[70px] h-[40px] bg-gray-100 rounded-lg"
                         onClick={closeCreateModal}
                       >
                         <p className="text-black">취소</p>
                       </button>
                       <button
                         type="submit"
-                        className="w-[70px] h-[40px] bg-blue-500 m-5 rounded-lg"
+                        className="w-[70px] h-[40px] bg-blue-500 rounded-lg"
                       >
                         <p className="text-white">생성</p>
                       </button>

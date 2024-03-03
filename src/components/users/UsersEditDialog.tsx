@@ -1,4 +1,6 @@
 import { updateUser } from "@/apis/users";
+import { editDialogProps } from "@/common";
+import { UpdateUserProps } from "@/user";
 import { Dialog, Transition } from "@headlessui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Fragment, useEffect } from "react";
@@ -10,13 +12,13 @@ const UsersEditDialog = ({
   currentUserId,
   currentName,
   selectedEmail,
-}) => {
+}: editDialogProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm();
+  } = useForm<UpdateUserProps>();
 
   useEffect(() => {
     setValue("name", currentName);
@@ -31,7 +33,7 @@ const UsersEditDialog = ({
       queryClient.invalidateQueries({ queryKey: ["users"] });
     },
   });
-  const onSubmit = (data) => {
+  const onSubmit = (data: UpdateUserProps) => {
     mutation.mutate({
       userId: data.userId,
       name: data.name,
@@ -65,7 +67,7 @@ const UsersEditDialog = ({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-[800px] h-[600px] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-[800px] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <Dialog.Title
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900 flex justify-start"
@@ -112,19 +114,19 @@ const UsersEditDialog = ({
                         </p>
                       )}
                     </div>
-                    <div className="flex justify-center mt-10">
+                    <div className="flex justify-center gap-5 mt-10">
                       <button
                         type="button"
-                        className="w-[70px] h-[40px] bg-gray-100 m-5 rounded-lg"
+                        className="w-[70px] h-[40px] bg-gray-100 rounded-lg"
                         onClick={closeEditModal}
                       >
                         <p className="text-black">취소</p>
                       </button>
                       <button
                         type="submit"
-                        className="w-[70px] h-[40px] bg-blue-500 m-5 rounded-lg"
+                        className="w-[70px] h-[40px] bg-blue-500 rounded-lg"
                       >
-                        <p className="text-white">생성</p>
+                        <p className="text-white">저장</p>
                       </button>
                     </div>
                   </form>

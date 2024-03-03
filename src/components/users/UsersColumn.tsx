@@ -1,4 +1,4 @@
-import { Users } from "@/type";
+import { Users } from "@/user";
 import moment from "moment";
 
 export interface UsersColumnProps extends Users {
@@ -6,16 +6,13 @@ export interface UsersColumnProps extends Users {
 }
 
 const UsersColumn = ({
-  id,
   email,
   name,
   lastLoggedIn,
-  company,
   openEditModal,
-  ...rest
 }: UsersColumnProps) => {
   return (
-    <div key={id}>
+    <div>
       <div className="flex justify-between items-center gap-10 h-[30px]">
         <div className="flex-1">
           <p className="text-left">{email}</p>
@@ -25,6 +22,8 @@ const UsersColumn = ({
         </div>
         <div className="flex-1">
           <p className="text-left">
+            {/* firestore에서 Date 대신 Timestamp 값으로 오기 때문에 임시로 toDate() 메서드 사용 */}
+            {/* {moment(lastLoggedIn).format("YYYY-MM-DD HH:mm:ss")} */}
             {moment(lastLoggedIn.toDate()).format("YYYY-MM-DD HH:mm:ss")}
           </p>
         </div>

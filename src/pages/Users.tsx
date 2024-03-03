@@ -1,9 +1,10 @@
 import { fetchUsers } from "@/apis/users";
+import ErrorDialog from "@/components/common/ErrorDialog";
 import Pagination from "@/components/common/Pagination";
 import UsersCreateDialog from "@/components/users/UsersCreateDialog";
 import UsersEditDialog from "@/components/users/UsersEditDialog";
 import authState from "@/recoil/auth/atom";
-import { UsersProps } from "@/type";
+import { UsersProps } from "@/user";
 import UsersTable from "@components/users/UsersTable";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -17,7 +18,7 @@ export default function Users() {
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
   };
-  const { isLoading, data } = useQuery({
+  const { isLoading, isError, data } = useQuery({
     queryKey: ["users", page, size],
     queryFn: () => fetchUsers(page, size),
   });
@@ -38,11 +39,12 @@ export default function Users() {
   const navigate = useNavigate();
   const auth = useRecoilValue(authState);
 
+  const [isErrorOpen, setIsErrorOpen] = useState<boolean>(false);
   const [isCreateOpen, setIsCreateOpen] = useState<boolean>(false);
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false);
-  const [currentUserId, setCurrentUserId] = useState<number | null>(null);
-  const [currentName, setCurrentName] = useState<string | null>(null);
-  const [selectedEmail, setSelectedEmail] = useState<string | null>(null);
+  const [currentUserId, setCurrentUserId] = useState<number>(0);
+  const [currentName, setCurrentName] = useState<string>("");
+  const [selectedEmail, setSelectedEmail] = useState<string>("");
 
   const closeCreateModal = () => {
     setIsCreateOpen(false);
@@ -58,6 +60,10 @@ export default function Users() {
 
   const openEditModal = () => {
     setIsEditOpen(true);
+  };
+
+  const closeErrorModal = () => {
+    setIsErrorOpen(false);
   };
 
   useEffect(() => {
@@ -77,6 +83,15 @@ export default function Users() {
   }, [timer, auth]);
   if (isLoading || !data) {
     return <></>;
+  }
+
+  if (isError) {
+    return (
+      <ErrorDialog
+        isErrorOpen={isErrorOpen}
+        closeErrorModal={closeErrorModal}
+      />
+    );
   }
 
   if (auth !== "admin") {

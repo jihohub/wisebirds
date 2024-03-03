@@ -1,3 +1,4 @@
+import { PostUserProps, UpdateUserProps } from "@/user";
 import {
   collection,
   doc,
@@ -58,7 +59,7 @@ export async function fetchUsers(page: number, size: number) {
   return res;
 }
 
-export async function postUser(data) {
+export async function postUser(data: PostUserProps) {
   const db = getFirestore();
   const usersCollectionRef = collection(db, "users");
   const snapshot = await getDocs(usersCollectionRef);
@@ -84,7 +85,7 @@ export async function postUser(data) {
   await setDoc(newUserRef, newData);
 }
 
-export async function updateUser({ userId, name }) {
+export async function updateUser({ userId, name }: UpdateUserProps) {
   const db = getFirestore();
   const userIdStr = userId < 10 ? `users0${userId}` : `users${userId}`;
   const userRef = doc(db, "users", userIdStr);

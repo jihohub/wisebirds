@@ -1,7 +1,7 @@
-import { CampaignsProps } from "@/type";
+import { CampaignsProps } from "@/campaign";
 import CampaignsColumn from "./CampaignsColumn";
 
-const CampaignsTable = ({ content, ...rest }: CampaignsProps) => {
+const CampaignsTable = ({ content }: CampaignsProps) => {
   const index = [
     "상태",
     "캠페인명",
@@ -40,7 +40,7 @@ const CampaignsTable = ({ content, ...rest }: CampaignsProps) => {
       </div>
       <hr className="" />
       {content.map((campaign) => (
-        <CampaignsColumn {...campaign} />
+        <CampaignsColumn {...campaign} key={campaign.id} />
       ))}
     </div>
   );

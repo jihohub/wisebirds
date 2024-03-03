@@ -1,4 +1,4 @@
-import { UpdateCampaignProps } from "@/type";
+import { UpdateCampaignProps } from "@/campaign";
 import app from "@lib/firebase/firebase";
 import {
   collection,
