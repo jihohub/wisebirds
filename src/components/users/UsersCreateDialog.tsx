@@ -79,9 +79,14 @@ const UsersCreateDialog = ({
                           minLength: 9,
                           maxLength: 49,
                           pattern: emailPattern,
-                          validate: async (value) =>
-                            (await checkEmailDuplication(value)) &&
-                            "이미 사용중인 이메일입니다. 다른 이메일을 입력하세요.",
+                          validate: async (value) => {
+                            const isDuplicate = await checkEmailDuplication(
+                              value
+                            );
+                            return isDuplicate
+                              ? "이미 사용중인 이메일입니다. 다른 이메일을 입력하세요."
+                              : true;
+                          },
                         })}
                         className="border border-[1px_black_solid]"
                       />
