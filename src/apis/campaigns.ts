@@ -1,3 +1,4 @@
+import { UpdateCampaignProps } from "@/type";
 import app from "@lib/firebase/firebase";
 import {
   collection,
@@ -11,12 +12,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
-interface UpdateProps {
-  campaignId: number;
-  newEnabledStatus: boolean;
-}
-
-export async function fetchData(page: number, size: number) {
+export async function fetchCampaigns(page: number, size: number) {
   const db = getFirestore();
   const campaignsCol = collection(db, "campaigns");
   const q = query(
@@ -62,10 +58,10 @@ export async function fetchData(page: number, size: number) {
   return res;
 }
 
-export async function updateData({
+export async function updateCampaigns({
   campaignId,
   newEnabledStatus,
-}: UpdateProps) {
+}: UpdateCampaignProps) {
   const db = getFirestore(app);
   const campaignIdStr =
     campaignId < 10 ? `campaign0${campaignId}` : `campaign${campaignId}`;

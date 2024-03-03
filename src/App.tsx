@@ -1,9 +1,10 @@
 import Header from "@components/common/Header";
+import Campaigns from "@pages/Campaigns";
 import Home from "@pages/Home";
+import Users from "@pages/Users";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import RecoilProvider from "./lib/recoil/provider";
-import Campaigns from "./pages/Campaigns";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/campaigns" element={<Campaigns />} />
+            <Route path="/users" element={<Users />} />
           </Routes>
         </BrowserRouter>
       </RecoilProvider>

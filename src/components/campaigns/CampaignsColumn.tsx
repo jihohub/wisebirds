@@ -1,4 +1,4 @@
-import { updateData } from "@/apis/campaigns";
+import { updateCampaigns } from "@/apis/campaigns";
 import { Campaigns } from "@/type";
 import convertCampaignObj from "@/utils/convertCampaignObj";
 import { Switch } from "@headlessui/react";
@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 const CampaignsColumn = ({ ...campaign }: Campaigns) => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: updateData,
+    mutationFn: updateCampaigns,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["campaigns"] });
     },

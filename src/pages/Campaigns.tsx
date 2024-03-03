@@ -1,4 +1,4 @@
-import { fetchData } from "@/apis/campaigns";
+import { fetchCampaigns } from "@/apis/campaigns";
 import { CampaignsProps } from "@/type";
 import CampaignsTable from "@components/campaigns/CampaignsTable";
 import Pagination from "@components/common/Pagination";
@@ -14,7 +14,7 @@ export default function Campaigns() {
   };
   const { isLoading, data } = useQuery({
     queryKey: ["campaigns", page, size],
-    queryFn: () => fetchData(page, size),
+    queryFn: () => fetchCampaigns(page, size),
   });
   const transformedData: CampaignsProps = {
     content: data?.content || [],
