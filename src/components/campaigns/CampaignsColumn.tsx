@@ -1,5 +1,5 @@
-import { updateData } from "@/apis/campaigns";
-import { Campaigns } from "@/type";
+import { updateCampaigns } from "@/apis/campaigns";
+import { Campaigns } from "@/campaign";
 import convertCampaignObj from "@/utils/convertCampaignObj";
 import { Switch } from "@headlessui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -7,13 +7,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 const CampaignsColumn = ({ ...campaign }: Campaigns) => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: updateData,
+    mutationFn: updateCampaigns,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["campaigns"] });
     },
   });
   return (
-    <div key={campaign.id}>
+    <div>
       <div className="flex justify-between items-center gap-10 h-[30px]">
         <div className="w-[100px] text-center">
           <Switch

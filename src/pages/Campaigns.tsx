@@ -1,5 +1,6 @@
-import { fetchData } from "@/apis/campaigns";
-import { CampaignsProps } from "@/type";
+import { fetchCampaigns } from "@/apis/campaigns";
+import { CampaignsProps } from "@/campaign";
+import ErrorDialog from "@/components/common/ErrorDialog";
 import CampaignsTable from "@components/campaigns/CampaignsTable";
 import Pagination from "@components/common/Pagination";
 import { useQuery } from "@tanstack/react-query";
@@ -12,9 +13,9 @@ export default function Campaigns() {
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
   };
-  const { isLoading, data } = useQuery({
+  const { isLoading, isError, data } = useQuery({
     queryKey: ["campaigns", page, size],
-    queryFn: () => fetchData(page, size),
+    queryFn: () => fetchCampaigns(page, size),
   });
   const transformedData: CampaignsProps = {
     content: data?.content || [],
@@ -28,9 +29,25 @@ export default function Campaigns() {
     first: data?.first || false,
     empty: data?.empty || true,
   };
+  const [isErrorOpen, setIsErrorOpen] = useState<boolean>(false);
+
+  const closeErrorModal = () => {
+    setIsErrorOpen(false);
+  };
+
   if (isLoading || !data) {
     return <></>;
   }
+
+  if (isError) {
+    return (
+      <ErrorDialog
+        isErrorOpen={isErrorOpen}
+        closeErrorModal={closeErrorModal}
+      />
+    );
+  }
+
   return (
     <main className="flex min-h-screen flex-col items-center px-24 pt-40">
       <div className="w-full pb-10">

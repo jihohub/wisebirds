@@ -23,14 +23,14 @@ export interface CampaignsProps {
   total_pages: number;
   last: boolean;
   number: number;
+  size: number;
   sort: object;
   number_of_elements: number;
   first: boolean;
   empty: boolean;
 }
 
-export interface PaginationProps {
-  currentPage: number;
-  onPageChange: (page: number) => void;
-  pages: number;
+export interface UpdateCampaignProps {
+  campaignId: number;
+  newEnabledStatus: boolean;
 }
