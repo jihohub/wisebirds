@@ -24,14 +24,18 @@ const Header = () => {
     <div className="fixed w-full h-[80px] bg-blue-500 flex justify-between items-center text-white z-10">
       <div className="flex h-full items-center justify-around">
         <div className="px-5">
-          <Link to="/">Wisebirds</Link>
+          <Link to="/">
+            <p className="text-white">Wisebirds</p>
+          </Link>
         </div>
         <div
           className={`h-full flex items-center px-5 ${
             location.pathname === "/campaigns" && "bg-blue-600"
           }`}
         >
-          <Link to="/campaigns">캠페인</Link>
+          <Link to="/campaigns">
+            <p className="text-white">캠페인</p>
+          </Link>
         </div>
         {auth === "admin" && (
           <div
@@ -39,7 +43,9 @@ const Header = () => {
               location.pathname === "/users" && "bg-blue-600"
             }`}
           >
-            <Link to="/users">사용자</Link>
+            <Link to="/users">
+              <p className="text-white">사용자</p>
+            </Link>
           </div>
         )}
       </div>
