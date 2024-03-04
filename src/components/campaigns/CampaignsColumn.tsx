@@ -1,8 +1,10 @@
 import { updateCampaigns } from "@/apis/campaigns";
 import { Campaigns } from "@/campaign";
+import authState from "@/recoil/auth/atom";
 import convertCampaignObj from "@/utils/convertCampaignObj";
 import { Switch } from "@headlessui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRecoilValue } from "recoil";
 
 const CampaignsColumn = ({ ...campaign }: Campaigns) => {
   const queryClient = useQueryClient();
@@ -12,6 +14,8 @@ const CampaignsColumn = ({ ...campaign }: Campaigns) => {
       queryClient.invalidateQueries({ queryKey: ["campaigns"] });
     },
   });
+  const auth = useRecoilValue(authState);
+  const disabled = auth === "viewer";
   return (
     <div>
       <div className="flex justify-between items-center gap-10 h-[30px]">
@@ -24,6 +28,7 @@ const CampaignsColumn = ({ ...campaign }: Campaigns) => {
                 newEnabledStatus: !campaign.enabled,
               })
             }
+            disabled={disabled}
             className={`${
               campaign.enabled ? "bg-blue-500" : "bg-gray-200"
             } relative inline-flex h-6 w-11 items-center rounded-full`}
